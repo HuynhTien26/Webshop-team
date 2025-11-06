@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<!-- TRANG ĐĂNG NHẬP ADMIN - Giao diện đăng nhập hệ thống quản trị -->
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Đăng Nhập Quản Trị Pocky Doll</title>
+  <!-- CSS nhúng trực tiếp trong trang -->
+  <style>
+    @font-face {
+            font-family: 'Lobster';
+            /* Giả sử file font nằm ở 'font/Lobster-Regular.ttf' 
+               giống như trang index.html */
+            src: url('font/Lobster-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+    }
+
+    body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Thêm 2 dòng này */
+    position: relative; /* Để làm gốc cho ::before */
+    overflow: hidden;   /* Ngăn scrollbar do ảnh nền bị xoay */
+    
+    /* Xóa 3 dòng background cũ ở đây */
+  }
+  body::before {
+    content: "";
+    position: fixed; /* Đảm bảo ảnh nền lấp đầy viewport */
+    top: 50%;
+    left: 50%;
+    
+    /* Chuyển ảnh nền của bạn vào đây */
+    background: url("Images/admin/background.png") no-repeat center;
+    background-size: cover;
+    
+    /* ĐẶT ẢNH NỀN NẰM SAU FORM */
+    z-index: -1;
+
+    /* == PHẦN XOAY ẢNH == */
+    
+    /* 1. Xoay 90 độ */
+    transform: translate(-50%, -50%) rotate(-90deg);
+    
+    /* 2. Đảo ngược kích thước để lấp đầy màn hình 
+       (vì ảnh đã bị xoay 90 độ) */
+    width: 100vh; 
+    height: 100vw;
+}
+
+    .login-container {
+    background:rgba(255, 255, 255, 0.3); /* NỀN TRẮNG HƠI TRONG SUỐT (30% opacity) */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    border-radius: 12px;
+    padding: 40px;
+    width: 350px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2); /* Đổ bóng nhẹ hơn so với lúc dùng ảnh nền */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+   }
+
+
+    .login-logo {
+            font-family: 'Lobster', cursive;
+            font-size: 52px; /* Kích thước logo */
+            font-weight: 400;
+            color: #FFFFFF; /* Màu trắng */
+            margin-bottom: 25px; /* Khoảng cách với chữ ADMIN */
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Đổ bóng cho nổi bật */
+        }
+    
+    h2 {
+      margin: 10px 0 5px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    p {
+      margin: 0 0 20px;
+      font-size: 14px;
+      color: #bbb;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    .input-group input {
+      width: 75%;
+      padding: 14px;
+      border-radius: 25px;
+      border: none;
+      outline: none;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .input-group input:focus,
+    .input-group input:hover {
+      box-shadow: 0 0 8px #4e7fff;
+      border: 1px solid #4e7fff;
+    }
+
+    
+    .btn {
+      width: 40%;
+      padding: 12px;
+      border-radius: 25px;
+      border: 2px solid #4e7fff;
+      background: transparent;
+      color: #4e7fff;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn:hover {
+      background: #4e7fff;
+      color: #ffffff;
+      box-shadow: 0 0 12px #4e7fff;
+    }
+  </style>
+</head>
+<body>
+  <!-- Container chính của form đăng nhập -->
+    <div class="login-container">
+    
+    <div class="login-logo">Pocky Doll</div>
+
+    <h2>ADMIN</h2>
+    
+    <form id="loginForm">
+
+    <!-- Form đăng nhập -->
+    <form id="loginForm">
+      <!-- Ô nhập tài khoản -->
+      <div class="input-group">
+        <input id="username" type="text" placeholder="Tài khoản" required>
+      </div>
+      <!-- Ô nhập mật khẩu -->
+      <div class="input-group">
+        <input id="password" type="password" placeholder="Mật khẩu" required>
+      </div>
+      <!-- Nút đăng nhập -->
+      <button type="submit" class="btn">ĐĂNG NHẬP</button>
+      <!-- Div hiển thị thông báo lỗi -->
+      <div id="errorMsg" style="color:#ffb3b3;margin-top:12px"></div>
+    </form>
+  </div>
+
+  <!-- =========================== -->
+  <!-- JAVASCRIPT - Xử lý đăng nhập -->
+  <!-- =========================== -->
+  <script>
+    // Đợi trang tải xong rồi mới gán sự kiện
+    (function(){
+      // Lấy các phần tử HTML
+      const form = document.getElementById('loginForm')
+      const errorMsg = document.getElementById('errorMsg')
+      
+      // Xử lý sự kiện submit form
+      form.addEventListener('submit', function(e){
+        e.preventDefault() // Ngăn form gửi dữ liệu theo cách mặc định
+        
+        // Lấy giá trị từ ô input
+        const username = document.getElementById('username').value.trim()
+        const password = document.getElementById('password').value
+        
+        // Xóa thông báo lỗi cũ
+        errorMsg.textContent = ''
+        
+        // Kiểm tra thông tin đăng nhập (tài khoản cố định)
+        if(username === 'sgunhom4' && password === 'sgunhom4'){
+          try{
+            // Lưu thông tin đăng nhập vào bộ nhớ trình duyệt
+            const cleaned = username.toLowerCase().replace(/\s+/g,'')
+            sessionStorage.setItem('adminUser', cleaned)
+            sessionStorage.setItem('adminName', username)
+            sessionStorage.setItem('isLoggedIn', 'true') // Đánh dấu đã đăng nhập (sessionStorage)
+          }catch(e){
+            // Bỏ qua lỗi nếu không thể lưu
+          }
+          // Chuyển hướng đến trang admin dashboard
+          window.location.href = 'index.html'
+        } else {
+          // Hiển thị thông báo lỗi nếu sai tài khoản
+          errorMsg.textContent = 'Sai tên đăng nhập hoặc mật khẩu!'
+        }
+      })
+    })()
+  </script>
+</body>
+</html>
+
