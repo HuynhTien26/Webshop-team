@@ -9,8 +9,8 @@
     @font-face {
             font-family: 'Lobster';
             /* Giả sử file font nằm ở 'font/Lobster-Regular.ttf' 
-               giống như trang index.html */
-            src: url('font/Lobster-Regular.ttf') format('truetype');
+               giống như trang admin.html */
+            src: url('../../assets/font/Lobster-Regular.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
     }
@@ -191,7 +191,7 @@
             // Bỏ qua lỗi nếu không thể lưu
           }
           // Chuyển hướng đến trang admin dashboard
-          window.location.href = 'index.html'
+          window.location.href = 'admin.html'
         } else {
           // Hiển thị thông báo lỗi nếu sai tài khoản
           errorMsg.textContent = 'Sai tên đăng nhập hoặc mật khẩu!'
