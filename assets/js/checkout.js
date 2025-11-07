@@ -117,11 +117,11 @@ function toggleAddressMode(isNewMode) {
 document.getElementById('confirmOrderBtn').addEventListener('click', () => {
     let finalAddress = {};
 
-    if (isNewAddressMode) {
-        // Lấy dữ liệu từ form nhập liệu mới
+if (isNewAddressMode) {
+        // ... (Logic kiểm tra và lấy địa chỉ mới) ...
         const newName = document.getElementById('new_name').value.trim();
-        const newPhone = document.getElementById('new_phone').value.trim(); // ID mới cho SĐT là new_phone
-        const newAddressDetail = document.getElementById('new_address_detail').value.trim(); // ID mới cho SỐ NHÀ là new_address_detail
+        const newPhone = document.getElementById('new_phone').value.trim();
+        const newAddressDetail = document.getElementById('new_address_detail').value.trim();
         const newProvinceSelect = document.getElementById('new_province');
         const newDistrictSelect = document.getElementById('new_district');
         const newProvince = newProvinceSelect.value;
@@ -186,9 +186,18 @@ document.getElementById('confirmOrderBtn').addEventListener('click', () => {
         // ⭐️ THAY THẾ alert() BẰNG MODAL TÙY CHỈNH ⭐️
         showCustomSuccessModal(successMessage.replace(/\n/g, '<br>'));
         
-        // *** Xóa dữ liệu giỏ hàng sau khi đặt hàng thành công ***
+        // ⭐️⭐️ QUAN TRỌNG: XÓA GIỎ HÀNG ⭐️⭐️
+        
+        // 1. Xóa dữ liệu tạm thời dùng cho trang checkout
         localStorage.removeItem('checkoutItems'); 
+        
+        // 2. Xóa giỏ hàng GỐC (Dữ liệu thường dùng trên trang cart.html)
+        localStorage.removeItem('cart');
 
+
+        // Hiển thị modal thành công
+        showCustomSuccessModal(successMessage.replace(/\n/g, '<br>'));
+        
     } catch (e) {
         console.error("Lỗi khi xử lý checkout:", e);
         alert('Có lỗi xảy ra trong quá trình xử lý đơn hàng.');
