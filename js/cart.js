@@ -50,6 +50,68 @@ function checkAndRedirectToLogin() {
     return true; // Đã đăng nhập
 }
 
+
+// ----------------------------------------------------------------------
+// 🛒 LOGIC TẢI VÀ HIỂN THỊ SẢN PHẨM (MỚI THÊM)
+// ----------------------------------------------------------------------
+
+/**
+ * Tạo chuỗi HTML cho một sản phẩm trong giỏ hàng.
+ */
+function createCartItemHTML(item) {
+    const itemTotal = item.price * item.quantity;
+    const correctedImagePath = item.image.startsWith('../../') ? item.image : '../../' + item.image;
+    
+    // Đảm bảo data-id và data-price được set từ item
+ return `
+        <div class="cart-item" data-id="${item.id}" data-price="${item.price}">
+            <div><input type="checkbox" class="product-checkbox" aria-label="Chọn sản phẩm" /></div>
+            <div class="col-product">
+                <img src="${correctedImagePath}" alt="${item.name}" class="product-image item-thumbnail">
+                <div class="product-info">
+                    <h3 class="item-name">${item.name}</h3>
+                    <p style="font-size: 13px; color: var(--muted);">${item.desc || 'Phân loại: Mặc định'}</p>
+                </div>
+            </div>
+            <div class="col-price">${formatter.format(item.price)}</div>
+            <div class="col-quantity">
+                <div class="quantity-control">
+                    <button type="button" class="quantity-btn minus-btn">-</button>
+                    <input type="number" class="quantity-input" value="${item.quantity}" min="1" max="99">
+                    <button type="button" class="quantity-btn plus-btn">+</button>
+                </div>
+            </div>
+            <div class="col-total">${formatter.format(itemTotal)}</div>
+            <div class="col-action">
+                <a href="#" class="delete-item-btn">Xóa</a>
+            </div>
+        </div>
+    `;
+}
+
+/**
+ * Tải dữ liệu giỏ hàng từ Local Storage và chèn vào DOM.
+ */
+function loadCartItems() {
+    // Đọc từ localStorage với key 'cartItems' (KHỚP với user.js)
+    const cartItemsJson = localStorage.getItem('cartItems'); 
+    const cartSection = document.querySelector(".cart-section");
+
+    // Xóa nội dung cũ để tránh trùng lặp
+    if (cartSection) cartSection.innerHTML = ''; 
+
+    if (cartItemsJson && cartSection) {
+        const items = JSON.parse(cartItemsJson);
+        
+        if (items.length > 0) {
+            items.forEach(item => {
+                cartSection.insertAdjacentHTML('beforeend', createCartItemHTML(item));
+            });
+        }
+    }
+}
+
+
 // --- LOGIC CHỌN TẤT CẢ VÀ TÍNH TỔNG CỘNG ---
 
 function syncSelectAllCheckboxes(isChecked) {
@@ -162,7 +224,27 @@ function updateItemTotal(inputField) {
     const newTotal = unitPrice * quantity;
     colTotal.textContent = formatter.format(newTotal);
 
+    // Cập nhật số lượng trong Local Storage (MỚI THÊM)
+    updateQuantityInLocalStorage(cartItem.dataset.id, quantity);
+
     calculateCartTotal();
+}
+
+/**
+ * Cập nhật số lượng sản phẩm trong Local Storage khi người dùng thay đổi.
+ * @param {string} productId - ID sản phẩm.
+ * @param {number} newQuantity - Số lượng mới.
+ */
+function updateQuantityInLocalStorage(productId, newQuantity) {
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    const id = parseInt(productId);
+    
+    const itemIndex = cartItems.findIndex(item => item.id === id);
+    
+    if (itemIndex > -1) {
+        cartItems[itemIndex].quantity = newQuantity;
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    }
 }
 
 function setupQuantityControl() {
@@ -220,9 +302,14 @@ function setupDeleteButtons() {
         button.onclick = (e) => {
             e.preventDefault();
             const cartItem = button.closest(".cart-item");
+            const productId = cartItem.dataset.id; // Lấy ID sản phẩm
 
             if (cartItem) {
+                // Xóa khỏi DOM
                 cartItem.remove();
+
+                // Xóa khỏi Local Storage (MỚI THÊM)
+                deleteItemFromLocalStorage(productId);
 
                 setupEventListeners(); 
                 calculateCartTotal();
@@ -230,6 +317,20 @@ function setupDeleteButtons() {
             }
         };
     });
+}
+
+/**
+ * Xóa sản phẩm khỏi Local Storage.
+ * @param {string} productId - ID sản phẩm cần xóa.
+ */
+function deleteItemFromLocalStorage(productId) {
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    const id = parseInt(productId);
+
+    // Lọc ra các sản phẩm không có ID này
+    const updatedCart = cartItems.filter(item => item.id !== id);
+
+    localStorage.setItem('cartItems', JSON.stringify(updatedCart));
 }
 
 // ----------------------------------------------------------------------
@@ -306,8 +407,6 @@ function handleSimpleCheckout() {
 
 // Gán sự kiện cho nút Mua Hàng (Gọi hàm handleSimpleCheckout mới)
 if (simpleBuyButton) {
-    // Gỡ bỏ event listener cũ (nếu có)
-    // simpleBuyButton.removeEventListener("click", handleSimpleCheckout); 
     simpleBuyButton.addEventListener("click", handleSimpleCheckout);
 }
 
@@ -347,8 +446,10 @@ function setupEventListeners() {
 // Khởi tạo tất cả chức năng khi trang load
 document.addEventListener("DOMContentLoaded", () => {
     // ⭐️ BƯỚC QUAN TRỌNG: KIỂM TRA VÀ CHUYỂN HƯỚNG
-    // Nếu chưa đăng nhập, hàm này sẽ chuyển hướng và dừng thực thi code.
     if (!checkAndRedirectToLogin()) return; 
+
+    // ⭐️ Tải sản phẩm từ Local Storage và chèn vào DOM (ĐÃ THÊM)
+    loadCartItems(); 
 
     // Các hàm giỏ hàng chỉ chạy khi đã đăng nhập
     setupEventListeners();
