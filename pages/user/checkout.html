@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác Nhận Đơn Hàng & Thanh Toán</title>
+    
+        <link rel="stylesheet" href="../../assets/css/checkout.css">
+    
+    <link href="Images/admin/background.png" rel="stylesheet">
+</head>
+<body>
+    <h1 class="page-title">XÁC NHẬN ĐƠN HÀNG</h1>
+
+    <div class="login-card">
+        <h2>Kiểm tra và Xác nhận thông tin</h2>
+
+        <div class="order-section">
+            <h3>🛒 Sản phẩm đã đặt</h3>
+            
+            <div id="product-items-container">
+                <p style="text-align: center; opacity: 0.7;">Đang tải chi tiết đơn hàng...</p>
+            </div>
+            
+            <div class="final-total">
+                Tổng giá trị đơn hàng: <span id="final-total">0 VNĐ</span>
+            </div>
+        </div>
+
+        <div class="order-section" style="border-bottom: none;">
+            <h3>🏠 Thông tin nhận hàng</h3>
+            
+            <div class="address-toggle">
+                <button id="useExistingAddressBtn" class="active">Sử dụng địa chỉ có sẵn</button>
+                <button id="useNewAddressBtn">Nhập địa chỉ mới</button>
+            </div>
+
+            <div id="existingAddressMode">
+                <p><strong>Địa chỉ đã lưu:</strong></p>
+                <div class="current-address-display" id="saved-address-display">
+                    <p style="margin: 0; font-weight: bold;">[Tên Khách Hàng]</p>
+                    <p style="margin: 5px 0 0 0;"><span id="shipping-address">Đang tải địa chỉ...</span></p>
+                    <p style="margin: 5px 0 0 0;">SĐT: <span id="shipping-phone">09xx.xxx.xxx</span></p>
+                </div>
+                <p style="font-size: 0.9em; opacity: 0.8;">(Chọn "Nhập địa chỉ mới" nếu muốn giao tới nơi khác)</p>
+            </div>
+            
+            <div id="newAddressMode" style="display: none;">
+                <form id="newAddressForm" onsubmit="return false;">
+                    
+                    <div class="address-form-new"> 
+                        
+                        <input type="text" id="new_name" placeholder="Họ và Tên" required>
+                        
+                                                <input type="tel" id="new_phone" placeholder="Số điện thoại" required>
+
+                                                <input type="text" id="new_address_detail" placeholder="Số nhà, Tên đường..." required>
+                        
+                        <div class="input-group"> 
+                            <select id="new_province" required>
+                                <option value="">— Chọn Tỉnh/Thành —</option>
+                                <option value="hcm">TP. Hồ Chí Minh</option>
+                                <option value="hn">Hà Nội</option>
+                            </select>
+                            <select id="new_district" required>
+                                <option value="">— Chọn Quận/Huyện —</option>
+                                <option value="q1">Quận 1</option>
+                                <option value="qhp">Huyện Nhà Bè</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <h3 style="margin-top: 25px;">💳 Phương thức thanh toán</h3>
+            <div style="background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 8px;">
+                <label style="display: block; margin-bottom: 10px; font-size: 1.1em;">
+                    <input type="radio" name="payment_method" value="COD" checked>
+                    Thanh toán khi nhận hàng (COD)
+                </label>
+                <label style="display: block; font-size: 1.1em;">
+                    <input type="radio" name="payment_method" value="BANK">
+                    Chuyển khoản Ngân hàng
+                </label>
+            </div>
+            
+        </div>
+        
+        <button class="confirm-button" id="confirmOrderBtn">
+            HOÀN TẤT ĐẶT HÀNG
+        </button>
+        
+    </div>
+
+        <script src="../../assets/js/checkout.js"></script>
+</body>
+</html>

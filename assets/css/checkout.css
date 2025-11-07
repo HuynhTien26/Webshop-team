@@ -1,0 +1,203 @@
+/* --- 1. Thiết lập Body (Khung chứa) --- */
+body {
+    margin: 0;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    font-family: 'Roboto', sans-serif;
+    overflow: hidden; 
+    background-color: #333; 
+}
+
+/* --- 2. Tạo Lớp Phủ Nền (Background Layer) và Làm Mờ --- */
+body::before {
+    content: '';
+    position: absolute;
+    top: -10px; 
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    z-index: -1; 
+    
+    background-image: url('https://picsum.photos/1920/1080?random=2'); 
+    background-size: cover; 
+    background-position: center;
+    
+    filter: blur(8px); 
+    -webkit-filter: blur(8px);
+}
+
+/* --- 3. Định kiểu Tiêu đề "Đơn hàng của bạn" --- */
+.page-title {
+    color: #333; 
+    margin-bottom: 20px; 
+    font-size: 2.5em; 
+    font-weight: bold;
+    z-index: 1; 
+    padding: 10px 20px; 
+    background-color: rgba(255, 255, 255, 0.95); 
+    border-radius: 8px;
+}
+
+/* --- 4. Tạo Hiệu ứng Banner Nổi (Checkout Card) --- */
+.login-card {
+    width: 1300px; 
+    padding: 40px 50px; 
+    background-color: rgba(41, 154, 191, 0.85); /* Xanh Dương */
+    border-radius: 15px; 
+    box-shadow: 
+        0 10px 20px rgba(0, 0, 0, 0.5), 
+        0 0 15px rgba(255, 255, 255, 0.1); 
+    
+    position: relative;
+    z-index: 1;
+    color: white; 
+    text-align: left; 
+    
+    max-height: 90vh; 
+    overflow-y: auto; 
+}
+
+/* ĐIỀU CHỈNH: Tiêu đề bên trong banner */
+.login-card h2 {
+    text-align: center;
+    font-size: 2.2em; 
+    margin-top: 35px; 
+    margin-bottom: 25px; 
+}
+
+/* Cấu trúc chi tiết đơn hàng */
+.order-section {
+    padding: 20px 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+.order-section h3 {
+    margin-top: 0;
+    color: #ffc107; 
+    font-size: 1.6em;
+    margin-bottom: 15px;
+}
+
+/* Định dạng sản phẩm */
+.product-item {
+    display: grid;
+    grid-template-columns: 80px 1fr 150px; 
+    gap: 15px;
+    padding: 10px 0;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.product-item:first-child { border-top: none; }
+.product-image { width: 80px; height: 80px; object-fit: cover; border-radius: 6px; }
+.product-details strong { display: block; font-size: 1.1em; margin-bottom: 4px; }
+.product-details span { opacity: 0.8; font-size: 0.9em; }
+.item-total { text-align: right; font-size: 1.2em; color: #f7ff9e; }
+
+/* Định dạng tổng tiền cuối cùng */
+.final-total {
+    text-align: right;
+    padding-top: 20px;
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #fff;
+}
+.final-total span {
+    color: #ffc107; 
+    font-size: 1.2em;
+}
+
+/* Nút Xác nhận */
+.confirm-button {
+    width: 100%; 
+    padding: 15px; 
+    font-size: 1.4em; 
+    background-color: #ffc107; 
+    border: none; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    color: #333; 
+    font-weight: bold;
+    margin-top: 30px;
+    transition: background 0.2s;
+}
+.confirm-button:hover { background-color: #e0ac08; }
+
+/* === CSS FORM ĐỊA CHỈ === */
+.address-toggle {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.address-toggle button {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    font-weight: bold;
+}
+.address-toggle button.active {
+    background: #ffc107;
+    color: #333;
+    border-color: #ffc107;
+}
+
+.address-form-new input,
+.address-form-new select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #333;
+    font-size: 1em;
+    box-sizing: border-box; 
+}
+
+/* 🚀 PHẦN ĐÃ CHỈNH SỬA: Sử dụng 5 cột để chia tỷ lệ 3:1:1 cho Họ tên, Khoảng trống, SĐT */
+.address-form-new {
+    display: grid;
+    /* Chia tổng thành 5 phần bằng nhau */
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 15px; /* Giữ gap giữa các trường */
+}
+
+/* Họ và Tên: Chiếm 3/5 */
+.address-form-new #new_name {
+    grid-column: 1 / span 4; 
+}
+
+/* Số điện thoại: Chiếm 1/5 */
+.address-form-new #new_phone {
+    grid-column: 5 / span 1; 
+}
+
+/* Chi tiết địa chỉ: Chiếm toàn bộ 5/5 */
+.address-form-new #new_address_detail {
+    grid-column: 1 / 6; 
+}
+
+/* Tỉnh/Thành & Quận/Huyện: Vẫn chia đôi (2.5 phần mỗi bên) */
+.address-form-new .input-group {
+    grid-column: 1 / 6; /* Kéo dài 5 cột, sau đó chia đôi bên trong */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.current-address-display {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px dashed rgba(255, 255, 255, 0.5);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+/* === KẾT THÚC CSS FORM ĐỊA CHỈ === */
