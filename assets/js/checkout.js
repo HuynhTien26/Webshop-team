@@ -183,7 +183,7 @@ document.getElementById('confirmOrderBtn').addEventListener('click', () => {
             Phương thức: ${paymentMethod}
         `;
 
-        // ⭐️ THAY THẾ alert() BẰNG MODAL TÙY CHỈNH (ĐÃ FIX CĂN GIỮA) ⭐️
+        // ⭐️ THAY THẾ alert() BẰNG MODAL TÙY CHỈNH ⭐️
         showCustomSuccessModal(successMessage.replace(/\n/g, '<br>'));
         
         // *** Xóa dữ liệu giỏ hàng sau khi đặt hàng thành công ***

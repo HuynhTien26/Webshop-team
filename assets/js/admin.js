@@ -125,7 +125,7 @@ const sampleProducts = {
         description: 'Miku kute',
         unit: 'cái',
         quantity: 45,
-        image: '../../assets/img/MIKU/Miku 2.png',
+        image: '../../assets/img/HATSUNE MIKU/Miku 2.png',
         costPrice: 300000,
         suggestedPrice: 300000,
         profitMargin: 75,
