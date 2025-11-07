@@ -3,7 +3,7 @@
   const pwd = document.getElementById("password");
   const toggle = document.getElementById("pwdToggle");
   const eyeIcon = document.getElementById("eyeIcon");
-  if (!pwd || !toggle || !eyeIcon) return; // nothing to do if elements missing
+  if (!pwd || !toggle || !eyeIcon) return;
 
   let visible = false;
   const defaultPlaceholder = pwd.getAttribute("placeholder") || "";
@@ -11,10 +11,7 @@
 
   function updatePlaceholder() {
     if (pwd.value.trim() === "") {
-      pwd.setAttribute(
-        "placeholder",
-        visible ? showingPlaceholder : defaultPlaceholder,
-      );
+      pwd.setAttribute("placeholder", visible ? showingPlaceholder : defaultPlaceholder);
     } else {
       pwd.setAttribute("placeholder", "");
     }
@@ -24,14 +21,10 @@
     eyeIcon.textContent = open ? "visibility" : "visibility_off";
   }
 
-  // `() =>` is the same as `function ()`
   toggle.addEventListener("click", () => {
     visible = !visible;
     pwd.type = visible ? "text" : "password";
-    toggle.setAttribute(
-      "aria-label",
-      visible ? "Hide password" : "Show password",
-    );
+    toggle.setAttribute("aria-label", visible ? "Hide password" : "Show password");
     setIcon(!visible);
     updatePlaceholder();
   });
@@ -43,7 +36,6 @@
 
 // Shared validation + submit handler
 (function () {
-  // Detect whether it's login or signup form
   const form =
     document.getElementById("loginForm") ||
     document.getElementById("signupForm");
@@ -52,14 +44,13 @@
   const isSignup = form.id === "signupForm";
 
   // Initialize demo account if not exists
-  const demoUser = { username: "khachhang1", password: "demodemo" };
+  const demoUser = { username: "khachhang1", password: "123456" };
   const users = JSON.parse(localStorage.getItem("users")) || [];
   if (!users.find((u) => u.username === "khachhang1")) {
     users.push(demoUser);
     localStorage.setItem("users", JSON.stringify(users));
   }
 
-  // `(evt) =>` is the same as `function (evt)`
   form.addEventListener("submit", (evt) => {
     evt.preventDefault();
 
@@ -75,9 +66,7 @@
       return;
     }
     if (!usernamePattern.test(username)) {
-      alert(
-        'Tên đăng nhập phải có 3–30 kí tự. Được phép dùng chữ cái, số, ".", "_" và "-".',
-      );
+      alert('Tên đăng nhập phải có 3–30 kí tự. Được phép dùng chữ cái, số, ".", "_" và "-".');
       usernameEl.focus();
       return;
     }
@@ -93,13 +82,6 @@
       return;
     }
 
-    console.log("form data", {
-      type: isSignup ? "signup" : "login",
-      username,
-      password: pass ? "●●●●● (hidden)" : "",
-    });
-
-    // LocalStorage-based logic
     const users = JSON.parse(localStorage.getItem("users")) || [];
 
     if (isSignup) {
@@ -108,29 +90,53 @@
         return;
       }
 
-      // save new user
       users.push({ username, password: pass });
       localStorage.setItem("users", JSON.stringify(users));
       alert("Đăng ký thành công! Bạn có thể đăng nhập ngay bây giờ.");
       form.reset();
-
-      // Redirect to login.html after signup
       window.location.href = "login.html";
       return;
     }
 
-    const found = users.find(
-      (u) => u.username === username && u.password === pass,
-    );
+    const found = users.find((u) => u.username === username && u.password === pass);
     if (found) {
-      sessionStorage.setItem("loggedInUser", username);
+      // ✅ use localStorage consistently
+      localStorage.setItem("currentUser", JSON.stringify(found));
       alert("Đăng nhập thành công! Chào, " + username + " 👋");
       form.reset();
-
-      // Redirect to index.html after login
-      window.location.href = "../index.html";
+      window.location.href = "../../index.html"; // ✅ redirects to homepage
     } else {
       alert("Sai tên đăng nhập hoặc mật khẩu.");
     }
   });
 })();
+
+// Header update after login
+document.addEventListener("DOMContentLoaded", () => {
+  const headerRight = document.getElementById("headerRight");
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  if (currentUser && headerRight) {
+    headerRight.innerHTML = `
+      <a href="index.html" class="icon-with-label" aria-label="Trang chủ">
+        <div class="icon-wrap"><i class="fa-solid fa-house"></i></div>
+        <div class="icon-label">Trang chủ</div>
+      </a>
+
+      <a href="cart.html" class="icon-with-label" aria-label="Giỏ hàng">
+        <div class="icon-wrap"><i class="fa-solid fa-cart-shopping"></i></div>
+        <div class="icon-label">Giỏ hàng</div>
+      </a>
+
+      <div class="icon-with-label user-menu" aria-label="Tài khoản" tabindex="0">
+        <div class="icon-wrap"><i class="fa-solid fa-user"></i></div>
+        <div class="icon-label">${currentUser.username}</div>
+        <div class="user-dropdown">
+          <a href="profile.html" id="profileBtn">Hồ sơ</a>
+          <button id="logoutBtn" type="button">Đăng xuất</button>
+        </div>
+      </div>
+    `;
+  }
+});
+

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Pocky Doll</title>
+
+        <!-- Preconnect for font delivery -->
+        <link rel="preconnect" href="https://c04.nhahodau.net/" crossorigin />
+
+        <!-- Embedded Inter font -->
+        <link rel="stylesheet" href="./assets/fonts/inter.css" />
+
+        <!-- Font Awesome icons -->
+        <link
+            rel="stylesheet"
+            href="./assets/icon/fontawesome-free-7.1.0-web/css/all.min.css"
+        />
+
+        <!-- Main stylesheet -->
+        <link rel="stylesheet" href="./assets/css/user.css" />
+
+        <!-- Defer JavaScript -->
+        <script defer src="./assets/js/user.js"></script>
+    </head>
+    <body>
+        <div class="site-content-wrapper">
+            <header class="site-header">
+                <div class="header-inner container">
+                    <div class="logo">
+                        <a href="index.html" aria-label="Trang chủ">
+                            <img
+                                src="./assets/img/logo.svg"
+                                alt="Pocky Doll"
+                                width="120"
+                                height="auto"
+                            />
+                        </a>
+                    </div>
+
+                    <div class="header-center">
+                        <form
+                            class="search-box"
+                            role="search"
+                            aria-label="Tìm kiếm sản phẩm"
+                            id="searchForm"
+                            onsubmit="return false;"
+                        >
+                            <input
+                                id="searchInput"
+                                type="search"
+                                placeholder="Tìm kiếm"
+                                autocomplete="off"
+                            />
+                            <button id="searchBtn" aria-label="Tìm">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Header Right: content will be replaced dynamically by JS -->
+                    <nav
+                        class="header-right"
+                        id="headerRight"
+                        aria-label="Liên kết nhanh"
+                    >
+                        <!-- Default: guest view -->
+                        <a
+                            href="index.html"
+                            class="icon-with-label"
+                            aria-label="Trang chủ"
+                        >
+                            <div class="icon-wrap">
+                                <i class="fa-solid fa-house"></i>
+                            </div>
+                            <div class="icon-label">Trang chủ</div>
+                        </a>
+
+                        <a
+                            href="pages/user/cart.html"
+                            class="icon-with-label"
+                            id="cartBtn"
+                            aria-label="Giỏ hàng"
+                        >
+                            <div class="icon-wrap">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </div>
+                            <div class="icon-label">Giỏ hàng</div>
+                        </a>
+
+                        <a
+                            href="pages/user/profile.html"
+                            class="icon-with-label"
+                            id="accountBtn"
+                            aria-label="Tài khoản"
+                        >
+                            <div class="icon-wrap">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <div class="icon-label">Tài khoản</div>
+                        </a>
+                    </nav>
+                </div>
+            </header>
+
+            <section class="container">
+                <div class="hero-box" id="hero">
+                    <div class="hero-slide active">
+                        <img
+                            src="img/banner1.jpg"
+                            alt="Banner 1"
+                            onerror="this.style.display='none'"
+                        />
+                    </div>
+                    <div class="hero-slide">
+                        <img
+                            src="img/banner2.jpg"
+                            alt="Banner 2"
+                            onerror="this.style.display='none'"
+                        />
+                    </div>
+                    <div class="hero-slide">
+                        <img
+                            src="img/banner3.jpg"
+                            alt="Banner 3"
+                            onerror="this.style.display='none'"
+                        />
+                    </div>
+                    <div class="hero-inner">
+                        <div class="hero-text" id="heroText">
+                            Sản phẩm mới: Figure phiên bản giới hạn
+                        </div>
+                        <button class="hero-pill" id="heroCta">
+                            Xem chi tiết
+                        </button>
+                    </div>
+                    <div class="hero-dots" id="heroDots"></div>
+                </div>
+            </section>
+
+            <section class="container">
+                <div id="topics" class="topics-list"></div>
+            </section>
+
+            <main class="container main-area">
+                <section id="products" aria-label="Danh sách sản phẩm">
+                    <div class="grid" id="grid"></div>
+                </section>
+                <div class="pager" id="pager"></div>
+            </main>
+
+            <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+                <div
+                    class="modal"
+                    role="dialog"
+                    aria-modal="true"
+                    id="modal"
+                ></div>
+            </div>
+        </div>
+        <footer class="site-footer">
+            <div class="container">© 2025 Pocky Doll</div>
+        </footer>
+    </body>
+</html>

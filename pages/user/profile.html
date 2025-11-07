@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Thông tin cá nhân | Pocky Doll</title>
+
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- Link to CSS -->
+        <link rel="stylesheet" href="../../assets/css/auth.css" />
+
+        <!-- Link to JavaScript -->
+        <script src="../../assets/js/profile.js" defer></script>
+
+    </head>
+    <body>
+        <div class="page">
+            <main class="card">
+                <h1>Thông tin cá nhân</h1>
+
+                <form id="profileForm">
+                    <div class="form-row">
+                        <label>Tên đăng nhập</label>
+                        <input type="text" id="displayUsername" disabled />
+                    </div>
+
+                    <div class="form-row">
+                        <label for="fullName">Họ và tên</label>
+                        <input type="text" id="fullName" class="input" />
+                    </div>
+
+                    <div class="form-row">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="input" />
+                    </div>
+
+                    <div class="form-row">
+                        <label for="phone">Số điện thoại</label>
+                        <input type="tel" id="phone" class="input" />
+                    </div>
+
+                    <button type="submit" class="btn">Lưu thay đổi</button>
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        id="logoutBtn"
+                    >
+                        Đăng xuất
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-danger"
+                        id="deleteAccountBtn"
+                    >
+                        Xóa tài khoản
+                    </button>
+                </form>
+            </main>
+        </div>
+    </body>
+</html>

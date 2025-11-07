@@ -1,0 +1,4 @@
+# Ignore these directories under assets/
+assets/fonts/
+assets/icon/
+assets/img/

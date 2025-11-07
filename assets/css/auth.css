@@ -1,0 +1,309 @@
+:root {
+    --border-radius: 0.375rem;
+    --border-radius-md: calc(var(--border-radius) * 1);
+    --border-radius-lg: calc(var(--border-radius) * 4 / 3);
+    --spacing: 1rem;
+    --font-size: 0.8125rem;
+    --font-size-md: var(--font-size);
+    --font-weight-medium: 500;
+    --color-shadow: #000000;
+    --color-border: #bfbfbf;
+    --color-neutral: #000000;
+
+    --btn-top: #3a77fc;
+    --btn-bottom: #155dfc;
+
+    --page-bg: #ffffff;
+}
+
+/* page */
+/* Apply typeface globally */
+html,
+body,
+input,
+textarea,
+button,
+select
+/*, label*/ {
+    height: 100%;
+    background: var(--page-bg);
+    font-family:
+        "Inter",
+        system-ui,
+        -apple-system,
+        "Segoe UI",
+        Roboto,
+        "Helvetica Neue",
+        Arial;
+    margin: 0;
+    color: #222;
+}
+
+/* center and spacing */
+.page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+/* Card */
+.card {
+    width: 420px;
+    max-width: calc(100% - 32px);
+    background: #ffffff; /* (1) Background colour: #ffffff */
+    border-radius: var(--border-radius-lg); /* inspector token */
+    border: 1px solid #e5e5e5;
+    padding: 28px 32px;
+    box-sizing: border-box;
+
+    /* inspector's complex shadow:
+    0px 0px 2px 0px color-mix(in srgb, transparent, var(--clerk-color-shadow, #000000) 8%),
+    0px 1px 2px 0px color-mix(in srgb, transparent, var(--clerk-color-shadow, #000000) 6%),
+    0px 0px 0px 1px color-mix(in srgb, transparent, var(--clerk-color-border, var(--clerk-color-neutral, #000000)) 3%);
+    I (Quan) decided approximate with layered shadows and a faint border effect.
+    */
+    box-shadow:
+        0 40px 60px -30px rgba(0, 0, 0, 0.15),
+        0 18px 28px -14px rgba(0, 0, 0, 0.12),
+        0 1px 2px rgba(0, 0, 0, 0.06);
+    position: relative;
+}
+
+/* small top logo placeholder */
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 6px auto 8px;
+    width: 174px;
+    height: 80px;
+}
+
+.logo img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+h1 {
+    margin: 8px 0 6px;
+    text-align: center;
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+.subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 18px;
+}
+
+/* Form layout */
+form {
+    display: block;
+}
+
+.form-row {
+    margin-bottom: 14px;
+}
+
+.two-col {
+    display: flex;
+    gap: 14px;
+}
+label {
+    display: block;
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+    color: #333;
+    font-weight: 600;
+}
+.label-flex {
+    display: flex;
+    justify-content: space-between; /*pushes items to opposite ends */
+    align-items: center; /* vertically centers them if needed */
+}
+.optional {
+    font-weight: 400;
+    font-size: 0.78rem;
+    color: #8b8b8b;
+    margin-left: 8px;
+    font-weight: 500;
+}
+
+/* Inputs (3) */
+.input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: calc(var(--spacing) * 0.375)
+        calc(var(--spacing) * 0.75); /* inspector padding */
+    font-size: var(--font-size-md);
+    border-radius: var(--border-radius-md);
+    border: 1px solid #dddddd; /* default: 1 px #dddddd */
+    background: #fff;
+    outline: none;
+    transition:
+        border-color 0.12s ease,
+        box-shadow 0.12s ease,
+        transform 0.08s ease;
+    height: 40px;
+}
+
+.input::placeholder {
+    color: #bdbdbd;
+}
+
+.input:hover {
+    border-color: #b6b6b6; /* hover: #b6b6b6 */
+}
+
+.input:focus {
+    border-color: #b6b6b6; /* focus border */
+    /* grow animation: short grow animation 5px #d9d9d9 */
+    box-shadow: 0 0 0 5px #d9d9d9;
+    transform: translateZ(0);
+}
+
+/* password group with eye */
+.password-wrap {
+    position: relative;
+}
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    cursor: pointer;
+    color: #7a7a7a;
+    border-radius: 6px;
+}
+.material-symbols-rounded {
+    font-family: "Material Symbols Rounded";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 22px; /* tweak as needed */
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: "liga";
+    -webkit-font-smoothing: antialiased;
+    color: #7a7a7a;
+    transition: color 0.15s ease;
+    font-variation-settings:
+        "FILL" 0,
+        "wght" 200,
+        "GRAD" 0,
+        "opsz" 24;
+}
+.password-toggle:hover .material-symbols-rounded {
+    color: #555;
+}
+.password-toggle:focus {
+    outline: 2px solid rgba(21, 95, 252, 0.12);
+}
+
+/* Continue button (2) */
+.btn {
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    padding: 11px 14px;
+    font-size: 0.95rem;
+    border-radius: var(--border-radius-md);
+    font-weight: var(--font-weight-medium);
+    position: relative;
+    cursor: pointer;
+    color: #fff;
+    border: 0; /* we will simulate outside border with box-shadow below */
+    background: linear-gradient(180deg, var(--btn-top), var(--btn-bottom));
+    box-shadow:
+        0 2px 0 0 rgba(255, 255, 255, 0.08) inset,
+        0 0 0 1px #155dfc; /* the 1px "outside" border effect */
+    transition:
+        transform 0.06s ease,
+        filter 0.08s ease;
+    overflow: hidden;
+}
+
+/* hover: white overlay 20% */
+.btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0); /* 0 by default */
+    pointer-events: none;
+    transition: background 0.12s ease;
+}
+.btn:hover::after {
+    background: rgba(255, 255, 255, 0.2); /* 20% opacity white overlay */
+}
+.btn:active {
+    transform: translateY(1px);
+}
+
+/* small arrow icon */
+.btn .arrow {
+    display: inline-block;
+    margin-left: 8px;
+    width: 10px;
+    height: 10px;
+    vertical-align: middle;
+    opacity: 0.95;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 16px 0;
+}
+.divider-line {
+    flex: 1;
+    height: 1px;
+    background: #eee;
+}
+.divider-text {
+    color: #999;
+    font-size: 0.9rem;
+    text-transform: lowercase;
+}
+
+/* footer */
+.card-footer {
+    margin-top: 18px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(0, 0, 0, 0.04);
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+}
+.card-footer a {
+    color: var(--btn-bottom);
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 6px;
+}
+
+/* responsive */
+@media (max-width: 520px) {
+    .card {
+        padding: 22px 18px;
+        width: 94%;
+    }
+    .two-col {
+        flex-direction: column;
+    }
+}
