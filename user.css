@@ -1,0 +1,699 @@
+/* =================================================================== */
+/* STYLE.CSS - POCKY DOLL                     */
+/* =================================================================== */
+/* Mô tả: File CSS chính cho trang web Pocky Doll, bao gồm tất cả      */
+/* các style cho layout, component và responsive.               */
+/* =================================================================== */
+/* =================================================================== */
+/* 1. KHAI BÁO CHUNG (Global Styles)                                   */
+/* =================================================================== */
+
+/* ---------- Thiết lập lại (Reset) & Biến màu (CSS Variables) ---------- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --blue: #2f9bf3;
+    --blue-dark: #1c6ea4;
+    --pastel: #d6f1ff;
+    --muted: #777;
+    --card-border: #e9ecef;
+    --bg: #efece6;
+    font-family: "Inter", sans-serif;
+}
+
+@supports (font-variation-settings: normal) {
+    :root {
+        font-family: "InterVariable", sans-serif;
+        font-optical-sizing: auto;
+    }
+}
+
+/* ---------- Style cơ bản cho toàn trang (body) ---------- */
+body {
+    background: var(--bg);
+    color: #111;
+
+    /* Layout "Sticky Footer": Giúp footer luôn nằm ở cuối trang */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ---------- Wrapper cho nội dung chính (để đẩy footer xuống) ---------- */
+.site-content-wrapper {
+    flex: 1; /* Tự động giãn ra để lấp đầy không gian trống */
+}
+
+/* ---------- Layout container chung ---------- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+/* =================================================================== */
+/* 2. HEADER                                                           */
+/* =================================================================== */
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    background: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 12px;
+    gap: 12px;
+}
+.header-left {
+    flex: 0 0 auto;
+}
+.header-center {
+    flex: 1 1 50%;
+    display: flex;
+    justify-content: center;
+}
+.header-right {
+    flex: 0 0 auto;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* ---------- Logo ---------- */
+.logo {
+    font-family: "Lobster", cursive;
+    font-size: 25pt;
+    color: #000;
+    line-height: 1;
+}
+
+/* ---------- Thanh tìm kiếm ---------- */
+.search-box {
+    width: 560px;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    border-radius: 23px;
+    padding: 6px 8px;
+    border: 2px solid #d6d6d6;
+    transition:
+        box-shadow 0.18s ease,
+        transform 0.18s ease;
+}
+.search-box input {
+    flex: 1;
+    border: 0;
+    outline: none;
+    padding: 10px 12px;
+    font-size: 14px;
+    background: none;
+}
+.search-box button {
+    width: 50px;
+    height: 44px;
+    border-radius: 16px;
+    border: none;
+    background: var(--blue);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+        transform 0.14s ease,
+        box-shadow 0.14s ease;
+    position: relative;
+    overflow: visible;
+}
+.search-box:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+.search-box button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(47, 155, 243, 0.12);
+}
+.search-box button::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 40%;
+    background: linear-gradient(
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0)
+    );
+    border-radius: 12px;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* ---------- Các icon chức năng trên Header ---------- */
+.icon-with-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    width: 72px;
+}
+.icon-wrap {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    transition:
+        background 0.18s,
+        color 0.18s;
+}
+.icon-with-label:hover .icon-wrap {
+    background: var(--pastel);
+    color: var(--blue-dark);
+}
+.icon-label {
+    font-size: 12px;
+    color: #333;
+}
+
+/* --- Bổ sung cho Header - Bộ lọc tìm kiếm --- */
+.header-center {
+    position: relative; /* Làm mốc cho popup bộ lọc */
+}
+
+.search-filters-popup {
+    display: none; /* Ẩn mặc định */
+    position: absolute;
+    top: calc(100% + 8px); /* Nằm ngay dưới thanh tìm kiếm, có khoảng hở 8px */
+    
+    /* CĂN GIỮA POPUP */
+    left: 50%;
+    transform: translateX(-50%);
+    
+    width: 560px; /* Giữ chiều rộng giống thanh tìm kiếm */
+    max-width: 100%;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    z-index: 199; /* Dưới header (200) nhưng trên nội dung */
+    padding: 16px;
+    /* display: flex; -> Sẽ được kích hoạt bởi JS */
+    gap: 16px;
+}
+
+/* Lớp .search-active sẽ được JS thêm vào .header-center khi focus */
+.header-center.search-active .search-filters-popup {
+    display: flex; /* Hiện popup khi active */
+}
+
+.filter-group {
+    flex: 1;
+}
+.filter-group strong {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #333;
+}
+.filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.filter-options label {
+    font-size: 14px;
+    color: #555;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.filter-options input[type="radio"] {
+    margin-right: 6px;
+    flex-shrink: 0;
+}
+.filter-options select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    background: #fff;
+}
+
+
+/* =================================================================== */
+/* 3. NỘI DUNG CHÍNH (Main Content)                                    */
+/* =================================================================== */
+
+/* ---------- Hero Banner ---------- */
+.hero-box {
+    position: relative;
+    margin-top: 24px;
+}
+.hero-inner {
+    background: var(--blue);
+    color: #fff;
+    border-radius: 12px;
+    padding: 28px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+}
+.hero-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    overflow: hidden;
+}
+.hero-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.hero-slide.active {
+    opacity: 1;
+}
+.hero-text {
+    font-weight: 700;
+    font-size: 18px;
+    max-width: 70%;
+}
+.hero-pill {
+    width: 180px;
+    height: 42px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+.hero-dots {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 12px;
+    display: flex;
+    gap: 8px;
+}
+.hero-dots button {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+}
+.hero-dots button.active {
+    background: #fff;
+}
+
+/* ---------- Nút phân loại (Topics) ---------- */
+.topics-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 24px 0;
+}
+.topic-btn {
+    width: auto;
+    text-align: center;
+    border: none;
+    background: transparent;
+    border-radius: 10px;
+    padding: 5px 10px;
+    color: #555;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.topic-btn:not(.active):hover {
+    background-color: #e5e5e5;
+    color: #111;
+}
+.topic-btn.active {
+    background-color: var(--blue);
+    color: #fff;
+    font-weight: 600;
+}
+
+/* ---------- Khu vực hiển thị sản phẩm ---------- */
+.main-area {
+    padding: 18px 16px 40px;
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Bố cục 4 cột cố định */
+    gap: 20px;
+}
+
+/* ---------- Khung sản phẩm (Card) ---------- */
+.card {
+    background: #fff;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+    aspect-ratio: 2 / 3; /* Luôn giữ tỷ lệ 2:3 (cao hơn rộng) */
+    position: relative; /* Làm mốc cho nút "Thêm vào giỏ" */
+}
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+.card img {
+    width: 100%;
+    height: 65%; /* Chiều cao ảnh linh hoạt theo card */
+    object-fit: cover;
+    border-radius: 12px;
+    background: #f0f4f8;
+    margin-bottom: 16px;
+}
+.card .title {
+    font-weight: 800;
+    font-size: 22px;
+    color: #111;
+    padding: 0 4px;
+    margin-bottom: 2px;
+}
+.card .desc {
+    font-size: 14px;
+    color: var(--muted);
+    padding: 0 4px;
+    margin-bottom: 20px;
+}
+.card .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto; /* Luôn đẩy xuống dưới cùng */
+    padding: 0 4px;
+}
+.card .price {
+    color: #111;
+    font-weight: 700;
+    font-size: 24px;
+}
+.card .add-btn {
+    position: absolute; /* Nhấc nút ra khỏi luồngปกติ */
+    bottom: 12px;
+    right: 12px;
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+.card .add-btn:hover {
+    background-color: var(--blue-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* ---------- Thanh phân trang (Pagination) ---------- */
+.pager {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 18px;
+}
+.page-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    background: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.page-btn.active,
+.page-btn:hover {
+    background: var(--blue);
+    color: #fff;
+    border-color: var(--blue);
+}
+
+/* =================================================================== */
+/* 4. MODAL (Cửa sổ chi tiết sản phẩm)                                 */
+/* =================================================================== */
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.28s ease;
+    z-index: 400;
+}
+.modal-backdrop.show {
+    opacity: 1;
+    pointer-events: all;
+}
+.modal {
+    background: #fff;
+    width: 80%;
+    max-width: 1100px;
+    border-radius: 14px;
+    padding: 18px;
+    transform: scale(0.9);
+    transition:
+        transform 0.28s ease,
+        opacity 0.28s ease;
+    display: flex;
+    gap: 18px;
+}
+.modal-backdrop.show .modal {
+    transform: scale(1);
+}
+
+/* ---------- Bố cục bên trong Modal ---------- */
+.modal-left {
+    flex: 0 0 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1 / 1;
+}
+.modal-left img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+.modal-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+}
+.modal-right h2 {
+    font-size: 20px;
+    margin: 0;
+}
+.modal-right h4 {
+    font-size: 13px;
+    color: #666;
+    margin: 0;
+}
+.modal-right .info {
+    color: #333;
+    font-size: 14px;
+    margin-top: 8px;
+}
+.modal-right .meta {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+.modal-right .price {
+    font-weight: 800;
+    font-size: 32px;
+    color: #111;
+}
+
+/* ---------- Nút bấm trong Modal ---------- */
+.add-btn-modal {
+    background-color: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 28px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.add-btn-modal:hover {
+    background-color: var(--blue-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+.add-btn-modal .fa-solid {
+    font-size: 20px;
+}
+
+/* ---------- Nút đóng Modal ---------- */
+.modal .close-round {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: var(--pastel);
+    color: var(--blue-dark);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.18s;
+}
+.modal .close-round:hover {
+    background: #ffd6d6;
+    color: #d33;
+    border: 2px solid #d33;
+}
+.modal .close-round::before,
+.modal .close-round::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 2px;
+    background-color: currentColor;
+}
+.modal .close-round::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+.modal .close-round::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* =================================================================== */
+/* 5. FOOTER                                                           */
+/* =================================================================== */
+
+.site-footer {
+    background: var(--pastel);
+    color: var(--blue-dark);
+    padding: 14px 0;
+    margin-top: 30px;
+    font-weight: 600;
+    text-align: left;
+}
+
+/* =================================================================== */
+/* 6. RESPONSIVE (Tùy chỉnh cho các kích thước màn hình khác nhau)      */
+/* =================================================================== */
+
+/* ---------- Cho máy tính bảng (rộng dưới 1000px) ---------- */
+@media (max-width: 1000px) {
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .search-box {
+        width: 70%;
+    }
+    .search-filters-popup {
+        width: 70%;
+    }
+}
+
+/* ---------- Cho điện thoại (rộng dưới 600px) ---------- */
+@media (max-width: 600px) {
+    .logo {
+        font-size: 22pt;
+    }
+    .header-inner {
+        gap: 8px;
+        padding: 14px 8px;
+    }
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .search-filters-popup {
+        width: 100%;
+        flex-direction: column;
+    }
+}
+
+/* ---------- Cho điện thoại nhỏ (rộng dưới 520px) ---------- */
+@media (max-width: 520px) {
+    .modal {
+        width: 92%;
+        flex-direction: column;
+    }
+    .modal-left {
+        flex: 0 0 auto;
+    }
+}
+
+/* =================================================================== */
+/* 7. TIỆN ÍCH KHÁC (Utilities)                                        */
+/* =================================================================== */
+
+/* ---------- Style cho icon Font Awesome ---------- */
+.icon-wrap .fa-solid {
+    font-size: 18px;
+}
+.card .add-btn .fa-solid {
+    font-size: 16px;
+}
+
+/* ---------- Bỏ gạch chân cho link trên header ---------- */
+a.icon-with-label {
+    text-decoration: none !important;
+    color: inherit !important;
+}
