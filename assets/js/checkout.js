@@ -6,6 +6,7 @@ const formatter = new Intl.NumberFormat('vi-VN', {
 });
 
 // --- DỮ LIỆU MÔ PHỎNG ---
+// Dữ liệu giả định cho địa chỉ đã lưu
 const MOCK_SAVED_ADDRESS = {
     name: "Nguyễn Văn A",
     phone: "0901 234 567",
@@ -14,7 +15,7 @@ const MOCK_SAVED_ADDRESS = {
 };
 let isNewAddressMode = false; // Trạng thái mặc định là dùng địa chỉ có sẵn
 
-// --- LOGIC CUSTOM MODAL (MỚI THÊM) ---
+// --- LOGIC CUSTOM MODAL ---
 
 function showCustomSuccessModal(message) {
     const backdrop = document.getElementById('customModalBackdrop');
@@ -30,6 +31,27 @@ function showCustomSuccessModal(message) {
         // Chuyển hướng sau khi đóng Modal
         window.location.href = '../../index.html'; 
     };
+}
+
+// --- LOGIC CHUYỂN ĐỔI CHẾ ĐỘ ĐỊA CHỈ ---
+function toggleAddressMode(isNewMode) {
+    isNewAddressMode = isNewMode;
+    const existingMode = document.getElementById('existingAddressMode');
+    const newMode = document.getElementById('newAddressMode');
+    const existingBtn = document.getElementById('useExistingAddressBtn');
+    const newBtn = document.getElementById('useNewAddressBtn');
+    
+    if (isNewMode) {
+        existingMode.style.display = 'none';
+        newMode.style.display = 'block';
+        existingBtn.classList.remove('active');
+        newBtn.classList.add('active');
+    } else {
+        existingMode.style.display = 'block';
+        newMode.style.display = 'none';
+        existingBtn.classList.add('active');
+        newBtn.classList.remove('active');
+    }
 }
 
 // Hàm chính để tải và hiển thị dữ liệu
@@ -56,9 +78,12 @@ function loadCheckoutDetails() {
             if (products.length > 0) {
                 productHTML = products.map(item => {
                     const lineTotal = item.price * item.quantity;
+                    // Lấy ảnh và xử lý lỗi ảnh
+                    const correctedImagePath = item.image && item.image.includes('http') ? item.image : (item.image ? '../../' + item.image.replace('../../', '') : 'https://placehold.co/80x80/CCCCCC/000000?text=SP');
+
                     return `
                         <div class="product-item">
-                            <img src="${item.image}" alt="${item.name}" class="product-image" 
+                            <img src="${correctedImagePath}" alt="${item.name}" class="product-image" 
                                 onerror="this.src='https://placehold.co/80x80/CCCCCC/000000?text=SP'; this.onerror=null;" />
                             <div class="product-details">
                                 <strong>${item.name}</strong>
@@ -92,33 +117,12 @@ function loadCheckoutDetails() {
     }
 }
 
-// --- LOGIC CHUYỂN ĐỔI CHẾ ĐỘ ĐỊA CHỈ ---
-function toggleAddressMode(isNewMode) {
-    isNewAddressMode = isNewMode;
-    const existingMode = document.getElementById('existingAddressMode');
-    const newMode = document.getElementById('newAddressMode');
-    const existingBtn = document.getElementById('useExistingAddressBtn');
-    const newBtn = document.getElementById('useNewAddressBtn');
-    
-    if (isNewMode) {
-        existingMode.style.display = 'none';
-        newMode.style.display = 'block';
-        existingBtn.classList.remove('active');
-        newBtn.classList.add('active');
-    } else {
-        existingMode.style.display = 'block';
-        newMode.style.display = 'none';
-        existingBtn.classList.add('active');
-        newBtn.classList.remove('active');
-    }
-}
-
 // --- XỬ LÝ NÚT HOÀN TẤT ĐẶT HÀNG VÀ GHI LỊCH SỬ ---
 document.getElementById('confirmOrderBtn').addEventListener('click', () => {
     let finalAddress = {};
 
-if (isNewAddressMode) {
-        // ... (Logic kiểm tra và lấy địa chỉ mới) ...
+    if (isNewAddressMode) {
+        // Lấy dữ liệu từ form nhập liệu mới
         const newName = document.getElementById('new_name').value.trim();
         const newPhone = document.getElementById('new_phone').value.trim();
         const newAddressDetail = document.getElementById('new_address_detail').value.trim();
@@ -183,19 +187,16 @@ if (isNewAddressMode) {
             Phương thức: ${paymentMethod}
         `;
 
-        // ⭐️ THAY THẾ alert() BẰNG MODAL TÙY CHỈNH ⭐️
-        showCustomSuccessModal(successMessage.replace(/\n/g, '<br>'));
-        
-        // ⭐️⭐️ QUAN TRỌNG: XÓA GIỎ HÀNG ⭐️⭐️
+        // ⭐️⭐️ QUAN TRỌNG: XÓA GIỎ HÀNG GỐC ⭐️⭐️
         
         // 1. Xóa dữ liệu tạm thời dùng cho trang checkout
         localStorage.removeItem('checkoutItems'); 
         
-        // 2. Xóa giỏ hàng GỐC (Dữ liệu thường dùng trên trang cart.html)
-        localStorage.removeItem('cart');
+        // 2. Xóa giỏ hàng GỐC (Dùng khóa 'cartItems' theo logic của cart.js)
+        localStorage.removeItem('cartItems'); 
 
 
-        // Hiển thị modal thành công
+        // Hiển thị modal thành công và chuyển hướng
         showCustomSuccessModal(successMessage.replace(/\n/g, '<br>'));
         
     } catch (e) {
