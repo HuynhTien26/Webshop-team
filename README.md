@@ -11,11 +11,10 @@ Vì giới hạn kích thước của GitHub nên các tài nguyên sau được
 ├── fonts/
 ├── icon/
 ├── img/
-├── 336866f41fb1ca5791925d0447c68e5c.jpg
 └── logo.svg
 ```
 
-Nhấn vào [đây](https://drive.google.com/drive/folders/1euCrsdR3MVViUhM-TA7L2ZPBuaOQUiEa?usp=sharing) để tải về và giải nén. Sau đó bỏ 3 thư mục và 2 file trên vào `assets/`.
+Nhấn vào [đây](https://drive.google.com/drive/folders/1euCrsdR3MVViUhM-TA7L2ZPBuaOQUiEa?usp=sharing) để tải về và giải nén. Sau đó bỏ 3 thư mục và 1 file trên vào `assets/`.
 
 ## Structure
 

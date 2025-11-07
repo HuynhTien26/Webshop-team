@@ -8,7 +8,6 @@ body {
     justify-content: center; 
     align-items: center; 
     font-family: 'Roboto', sans-serif;
-    overflow: hidden; 
     background-color: #333; 
 }
 
@@ -16,18 +15,15 @@ body {
 body::before {
     content: '';
     position: absolute;
-    top: -10px; 
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: -1; 
     
-    background-image: url('https://picsum.photos/1920/1080?random=2'); 
+    background-color: #b7eff3; 
     background-size: cover; 
     background-position: center;
-    
-    filter: blur(8px); 
-    -webkit-filter: blur(8px);
 }
 
 /* --- 3. Định kiểu Tiêu đề "Đơn hàng của bạn" --- */
@@ -46,7 +42,7 @@ body::before {
 .login-card {
     width: 1300px; 
     padding: 40px 50px; 
-    background-color: rgba(41, 154, 191, 0.85); /* Xanh Dương */
+    background-color: rgba(46, 132, 160, 0.85); 
     border-radius: 15px; 
     box-shadow: 
         0 10px 20px rgba(0, 0, 0, 0.5), 
@@ -110,6 +106,29 @@ body::before {
     font-size: 1.2em;
 }
 
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Nền mờ */
+    z-index: 1000;
+    display: flex; /* Dùng flex để căn giữa dễ dàng hơn */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #333; /* Màu nền pop-up (giống hình cũ) */
+    color: white;
+    padding: 25px;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
 /* Nút Xác nhận */
 .confirm-button {
     width: 100%; 
@@ -149,48 +168,73 @@ body::before {
     border-color: #ffc107;
 }
 
+/* ⭐️ CODE FIX LỖI HIỂN THỊ INPUT/SELECT VÀ MÀU SẮC CHO NỀN TỐI ⭐️ */
 .address-form-new input,
 .address-form-new select {
     width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
+    padding: 12px 15px; 
+    margin-bottom: 0; 
+    border: 1px solid #ffffff66;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #fff; 
     border-radius: 6px;
-    border: 1px solid #ccc;
-    background-color: rgba(255, 255, 255, 0.9);
-    color: #333;
     font-size: 1em;
     box-sizing: border-box; 
+    transition: background-color 0.2s, border-color 0.2s;
 }
 
-/* 🚀 PHẦN ĐÃ CHỈNH SỬA: Sử dụng 5 cột để chia tỷ lệ 3:1:1 cho Họ tên, Khoảng trống, SĐT */
+.address-form-new input:focus,
+.address-form-new select:focus {
+    outline: none;
+    background-color: rgba(0, 0, 0, 0.4); 
+    border-color: #ffc107;
+}
+
+.address-form-new input::placeholder {
+    color: #ffffffa0;
+}
+
+.address-form-new select option {
+    color: #333; 
+    background: #fff;
+}
+/* ⭐️ KẾT THÚC FIX LỖI INPUT ⭐️ */
+
+
+/* 🚀 PHẦN LAYOUT GRID: ĐÃ SỬA ĐẢO VỊ TRÍ CHÍNH XÁC 🚀 */
 .address-form-new {
     display: grid;
-    /* Chia tổng thành 5 phần bằng nhau */
+    /* Chia tổng thành 5 phần bằng nhau (1fr 1fr 1fr 1fr 1fr) */
     grid-template-columns: repeat(5, 1fr); 
-    gap: 15px; /* Giữ gap giữa các trường */
+    gap: 15px; 
 }
 
-/* Họ và Tên: Chiếm 3/5 */
+/* Họ và Tên: HÀNG 1 - Chiếm 3/5 */
 .address-form-new #new_name {
-    grid-column: 1 / span 4; 
+    grid-column: 1 / span 3; 
+    grid-row: 1; 
 }
 
-/* Số điện thoại: Chiếm 1/5 */
-.address-form-new #new_phone {
-    grid-column: 5 / span 1; 
-}
-
-/* Chi tiết địa chỉ: Chiếm toàn bộ 5/5 */
+/* SỐ NHÀ, TÊN ĐƯỜNG: HÀNG 2 - Chiếm 5/5 */
 .address-form-new #new_address_detail {
-    grid-column: 1 / 6; 
+    grid-column: 1 / 6; /* Bắt đầu từ cột 1, kéo dài 5 cột (5/5) */
+    grid-row: 2; /* Ép vào hàng 2 */
 }
 
-/* Tỉnh/Thành & Quận/Huyện: Vẫn chia đôi (2.5 phần mỗi bên) */
+/* SỐ ĐIỆN THOẠI: HÀNG 1 - Chiếm 2/5 */
+.address-form-new #new_phone {
+    grid-column: 4 / 6; /* Kéo dài 5 cột */
+    grid-row: 1; /* Ép xuống hàng 1 */
+}
+
+/* Tỉnh/Thành & Quận/Huyện: Hàng 3 - Kéo dài 5 cột và chia đôi bên trong */
 .address-form-new .input-group {
-    grid-column: 1 / 6; /* Kéo dài 5 cột, sau đó chia đôi bên trong */
+    grid-column: 1 / 6; 
+    grid-row: 3; /* Ép xuống hàng thứ ba */
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     gap: 15px;
+    margin: 0;
 }
 
 .current-address-display {

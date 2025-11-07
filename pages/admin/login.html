@@ -6,14 +6,7 @@
   <title>Đăng Nhập Quản Trị Pocky Doll</title>
   <!-- CSS nhúng trực tiếp trong trang -->
   <style>
-    @font-face {
-            font-family: 'Lobster';
-            /* Giả sử file font nằm ở 'font/Lobster-Regular.ttf' 
-               giống như trang admin.html */
-            src: url('../../assets/font/Lobster-Regular.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-    }
+    /* Using Inter across the site, Lobster font removed. */
 
     body {
     margin: 0;
@@ -36,7 +29,7 @@
     left: 50%;
     
     /* Chuyển ảnh nền của bạn vào đây */
-    background: url("Images/admin/background.png") no-repeat center;
+    background: url("../../assets/img/background.png") no-repeat center;
     background-size: cover;
     
     /* ĐẶT ẢNH NỀN NẰM SAU FORM */
@@ -68,14 +61,15 @@
    }
 
 
-    .login-logo {
-            font-family: 'Lobster', cursive;
-            font-size: 52px; /* Kích thước logo */
-            font-weight: 400;
-            color: #FFFFFF; /* Màu trắng */
-            margin-bottom: 25px; /* Khoảng cách với chữ ADMIN */
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Đổ bóng cho nổi bật */
-        }
+  .login-logo {
+      /* Use site's Inter font now that Lobster is removed */
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      font-size: 52px; /* Kích thước logo */
+      font-weight: 700;
+      color: #FFFFFF; /* Màu trắng */
+      margin-bottom: 25px; /* Khoảng cách với chữ ADMIN */
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Đổ bóng cho nổi bật */
+    }
     
     h2 {
       margin: 10px 0 5px;
@@ -132,31 +126,29 @@
   </style>
 </head>
 <body>
-  <!-- Container chính của form đăng nhập -->
+    <!-- Container chính của form đăng nhập -->
     <div class="login-container">
-    
-    <div class="login-logo">Pocky Doll</div>
-
-    <h2>ADMIN</h2>
-    
-    <form id="loginForm">
-
-    <!-- Form đăng nhập -->
-    <form id="loginForm">
-      <!-- Ô nhập tài khoản -->
-      <div class="input-group">
-        <input id="username" type="text" placeholder="Tài khoản" required>
+      <div class="logo">
+        <a href="../../index.html"><img src="../../assets/img/logo.svg" alt="Pocky Doll" /></a>
       </div>
-      <!-- Ô nhập mật khẩu -->
-      <div class="input-group">
-        <input id="password" type="password" placeholder="Mật khẩu" required>
-      </div>
-      <!-- Nút đăng nhập -->
-      <button type="submit" class="btn">ĐĂNG NHẬP</button>
-      <!-- Div hiển thị thông báo lỗi -->
-      <div id="errorMsg" style="color:#ffb3b3;margin-top:12px"></div>
-    </form>
-  </div>
+
+      <h2>ADMIN</h2>
+
+      <form id="loginForm">
+        <!-- Ô nhập tài khoản -->
+        <div class="input-group">
+          <input id="username" type="text" placeholder="Tài khoản" required>
+        </div>
+        <!-- Ô nhập mật khẩu -->
+        <div class="input-group">
+          <input id="password" type="password" placeholder="Mật khẩu" required>
+        </div>
+        <!-- Nút đăng nhập -->
+        <button type="submit" class="btn">ĐĂNG NHẬP</button>
+        <!-- Div hiển thị thông báo lỗi -->
+        <div id="errorMsg" style="color:#ffb3b3;margin-top:12px"></div>
+      </form>
+    </div>
 
   <!-- =========================== -->
   <!-- JAVASCRIPT - Xử lý đăng nhập -->

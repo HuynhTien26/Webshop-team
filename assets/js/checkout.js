@@ -14,6 +14,24 @@ const MOCK_SAVED_ADDRESS = {
 };
 let isNewAddressMode = false; // Trạng thái mặc định là dùng địa chỉ có sẵn
 
+// --- LOGIC CUSTOM MODAL (MỚI THÊM) ---
+
+function showCustomSuccessModal(message) {
+    const backdrop = document.getElementById('customModalBackdrop');
+    const messageEl = document.getElementById('modalMessage');
+    const closeBtn = document.getElementById('modalCloseBtn');
+    
+    messageEl.innerHTML = message;
+    backdrop.style.display = 'flex'; // Hiển thị Modal
+
+    // Xử lý đóng Modal
+    closeBtn.onclick = () => {
+        backdrop.style.display = 'none';
+        // Chuyển hướng sau khi đóng Modal
+        window.location.href = '../../index.html'; 
+    };
+}
+
 // Hàm chính để tải và hiển thị dữ liệu
 function loadCheckoutDetails() {
     const productContainer = document.getElementById('product-items-container');
@@ -102,8 +120,8 @@ document.getElementById('confirmOrderBtn').addEventListener('click', () => {
     if (isNewAddressMode) {
         // Lấy dữ liệu từ form nhập liệu mới
         const newName = document.getElementById('new_name').value.trim();
-        const newPhone = document.getElementById('new_phone').value.trim();
-        const newAddressDetail = document.getElementById('new_address_detail').value.trim();
+        const newPhone = document.getElementById('new_phone').value.trim(); // ID mới cho SĐT là new_phone
+        const newAddressDetail = document.getElementById('new_address_detail').value.trim(); // ID mới cho SỐ NHÀ là new_address_detail
         const newProvinceSelect = document.getElementById('new_province');
         const newDistrictSelect = document.getElementById('new_district');
         const newProvince = newProvinceSelect.value;
@@ -157,21 +175,20 @@ document.getElementById('confirmOrderBtn').addEventListener('click', () => {
         localStorage.setItem('orderHistory', JSON.stringify(history));
 
 
-        // Log ra console để kiểm tra dữ liệu cuối cùng
-        console.log("--- Đơn hàng được xác nhận ---");
-        console.log("Mã Đơn Hàng:", newOrder.id);
-        console.log("Địa chỉ giao hàng:", finalAddress);
-        console.log("Phương thức thanh toán:", paymentMethod);
-        console.log("Tổng tiền:", totalAmountText);
-        
-        alert(`Đơn hàng (${newOrder.id}) của bạn đã được gửi thành công!\nGiao đến: ${finalAddress.fullAddress || finalAddress.address}\nTổng tiền: ${totalAmountText}\nPhương thức: ${paymentMethod}`);
+        // Tạo chuỗi thông báo
+        const successMessage = `
+            Đơn hàng (${newOrder.id}) của bạn đã được gửi thành công!\n
+            Giao đến: ${finalAddress.fullAddress || finalAddress.address}\n
+            Tổng tiền: ${totalAmountText}\n
+            Phương thức: ${paymentMethod}
+        `;
+
+        // ⭐️ THAY THẾ alert() BẰNG MODAL TÙY CHỈNH (ĐÃ FIX CĂN GIỮA) ⭐️
+        showCustomSuccessModal(successMessage.replace(/\n/g, '<br>'));
         
         // *** Xóa dữ liệu giỏ hàng sau khi đặt hàng thành công ***
         localStorage.removeItem('checkoutItems'); 
 
-        // Tùy chọn chuyển hướng đến trang lịch sử
-        // window.location.href = 'profile.html'; // Giả sử profile.html chứa lịch sử
-        
     } catch (e) {
         console.error("Lỗi khi xử lý checkout:", e);
         alert('Có lỗi xảy ra trong quá trình xử lý đơn hàng.');

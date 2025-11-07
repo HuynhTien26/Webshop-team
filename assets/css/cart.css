@@ -72,7 +72,7 @@ body {
 
 /* ---------- Logo/Title chung ---------- */
 .logo {
-    font-family: 'Lobster', cursive; 
+    font-family: 'aria-label', cursive; 
     font-size: 25pt; 
     color: #000; 
     line-height: 1;
@@ -166,6 +166,37 @@ body {
 }
 .icon-wrap .fa-solid {
     font-size: 18px;
+}
+
+/*=============================icon lịch sử đơn hàng========================*/
+
+/* Điều chỉnh chiều rộng cho icon Lịch sử để chứa chữ 2 dòng */
+.icon-with-label.history-item .icon-wrap i {
+    width: 80px; /* Tăng từ 72px lên 80px để chứa chữ ngắt dòng */
+    text-align: center;
+}
+
+/* Đảm bảo icon bên trong vòng tròn lớn hơn (nếu cần) */
+.history-item .icon-wrap .fa-solid {
+    /* Tăng kích thước icon lên một chút để nổi bật (Tùy chọn) */
+    font-size: 20px; 
+}
+
+/* Căn chỉnh chữ 2 dòng */
+.history-item .icon-label {
+    line-height: 1.2; /* Giúp chữ 2 dòng sát nhau hơn */
+    font-size: 13px; /* Tùy chọn: Tăng font size một chút cho dễ đọc */
+}
+
+/* Nếu bạn muốn thay đổi màu sắc của icon (giống như ảnh mẫu) */
+.history-item .icon-wrap {
+    background: #eee; /* Giữ màu xám */
+    color: #333; /* Giữ màu đen cho icon bên trong */
+}
+/* Loại bỏ hiệu ứng hover đổi màu blue cho riêng icon Lịch sử nếu bạn muốn nó luôn xám đen */
+.history-item:hover .icon-wrap { 
+    background: #e9e9e9; /* Giữ màu xám gần như cũ khi hover */
+    color: #333; /* Giữ màu icon đen */
 }
 
 /* =================================================================== */
