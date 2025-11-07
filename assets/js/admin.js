@@ -47,9 +47,8 @@ function handleLogout() {
     } catch (e) {
         // Bỏ qua lỗi nếu không thể truy cập sessionStorage
     }
-    // Không sử dụng localStorage để lưu đăng nhập theo máy -> không cần xóa localStorage
-    // Chuyển hướng về trang đăng nhập (replace để không lưu lại history)
-    window.location.replace('login.html');
+    // Chuyển hướng về trang đăng nhập
+    window.location.href = 'login.html';
 }
 
 // ===== TOGGLE SIDEBAR CHO MOBILE =====
@@ -92,12 +91,12 @@ function closeSidebarOnMobile() {
 const sampleProducts = {
     1: {
         code: 'SKU001',
-        name: 'Naruto',
+        name: 'Naruto Sage Mode',
         category: 'naruto',
         description: 'Figure Naruto ở chế độ Sage Mode với chi tiết tinh xảo',
         unit: 'cái',
         quantity: 125,
-        image: 'Images/NARUTO/Naruto.png',
+        image: 'naruto_sage.jpg',
         costPrice: 300000,
         suggestedPrice: 300000,
         profitMargin: 90,
@@ -120,9 +119,9 @@ const sampleProducts = {
     },
     3: {
         code: 'SKU003',
-        name: 'Miku',
-        category: 'miku',
-        description: 'Miku kute',
+        name: 'Raiden Shogun',
+        category: 'genshin',
+        description: 'Figure Raiden Shogun với thanh kiếm Engulfing Lightning',
         unit: 'cái',
         quantity: 45,
         image: 'raiden_shogun.jpg',
@@ -134,9 +133,9 @@ const sampleProducts = {
     },
     4: {
         code: 'SKU004',
-        name: 'Hinata',
-        category: 'naruto',
-        description: 'Figure Hinata ra ta ta',
+        name: 'Hatsune Miku Racing',
+        category: 'miku',
+        description: 'Figure Hatsune Miku phiên bản Racing Queen',
         unit: 'cái',
         quantity: 0,
         image: 'miku_racing.jpg',
@@ -148,9 +147,9 @@ const sampleProducts = {
     },
     5: {
         code: 'SKU005',
-        name: 'Sasuke',
-        category: 'naruto',
-        description: 'Figure Sasuke ở dạng quỷ với hiệu ứng lửa hồng',
+        name: 'Nezuko Demon Form',
+        category: 'demon-slayer',
+        description: 'Figure Nezuko ở dạng quỷ với hiệu ứng lửa hồng',
         unit: 'cái',
         quantity: 78,
         image: 'nezuko_demon.jpg',
