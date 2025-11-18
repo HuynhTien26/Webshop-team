@@ -1,6 +1,6 @@
-# Webshop-team
+# Pocky-Doll
 
-Web bán hàng nhóm 4
+Website bán hàng của c04 môn web 1
 
 ## Tài nguyên bổ sung
 
