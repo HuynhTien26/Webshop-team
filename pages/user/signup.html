@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="vi">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Đăng kí | Pocky Doll</title>
+
+	<link rel="preconnect" href="https://c04.nhahodau.net/" crossorigin />
+	<link rel="stylesheet" href="../../assets/fonts/inter.css" />
+	<link rel="stylesheet" href="../../assets/icon/fontawesome-free-7.1.0-web/css/all.min.css" />
+	<link rel="stylesheet" href="../../assets/css/auth.css" />
+	<script src="../../assets/js/auth.js" defer></script>
+</head>
+<body>
+	<div class="page">
+		<main class="card" role="main" aria-labelledby="title">
+
+			<a href="../../index.html" class="back-arrow-btn" aria-label="Quay về trang chủ"><i class="fa-solid fa-arrow-left"></i></a>
+
+			<div class="logo">
+				<a href="../../index.html"><img src="../../assets/img/logo.svg" alt="Pocky Doll" /></a>
+			</div>
+
+			<h1 id="title">Tạo tài khoản</h1>
+			<div class="subtitle">Điền thông tin và bắt đầu mua sắm ngay!</div>
+
+			<form id="signupForm" novalidate>
+				<div class="divider"><div class="divider-line"></div></div>
+
+				<div class="form-row two-col">
+					<div>
+						<label for="fullName">Họ và Tên*</label>
+						<input id="fullName" name="fullName" class="input" type="text"
+									 placeholder="Nguyễn Văn A" required autocomplete="name" />
+					</div>
+					<div>
+						<label for="username">Tên đăng nhập*</label>
+						<input id="username" name="username" class="input" type="text"
+									 placeholder="Tài khoản" required pattern="^[A-Za-z0-9._-]{3,30}$"
+									 title="3-30 kí tự. Dùng chữ, số, '.', '_' và '-'" autocomplete="username" />
+					</div>
+				</div>
+
+				<div class="form-row">
+					<label for="contact">Phương thức liên lạc*</label>
+					<input id="contact" name="contact" class="input" type="text"
+								 placeholder="Email hoặc SĐT (vd: 090xxxxxxx)" required autocomplete="tel" />
+				</div>
+				
+				<div class="form-row two-col">
+					<div>
+						<label for="password">Mật khẩu*</label>
+						<div class="password-wrap">
+							<input id="password" name="password" class="input" type="password"
+										 placeholder="Mật khẩu" required minlength="6"
+										 autocomplete="new-password"
+										 title="Mật khẩu tối thiểu 6 kí tự." />
+										<button type="button" class="password-toggle" aria-label="Hiện mật khẩu">
+											<i class="eye-icon fa-solid fa-eye" aria-hidden="true"></i>
+										</button>
+						</div>
+					</div>
+					<div>
+						<label for="confirmPassword">Xác nhận mật khẩu*</label>
+						<div class="password-wrap">
+							<input id="confirmPassword" name="confirmPassword" class="input" type="password"
+										 placeholder="Gõ lại mật khẩu" required minlength="6"
+										 autocomplete="new-password" />
+						</div>
+					</div>
+				</div>
+
+				<div class="form-row">
+					<label for="address_street">Địa chỉ*</label> <div class="form-row two-col" style="margin-bottom: 8px;">
+						<input id="address_street" name="address_street" class="input" type="text"
+									 placeholder="Số nhà, tên đường" required autocomplete="street-address" />
+						<select id="address_district" name="address_district" class="input">
+							<option value="">Chọn Quận / Huyện</option>
+							<option value="Q1">Quận 1</option>
+							<option value="Q3">Quận 3</option>
+							<option value="TB">Quận Tân Bình</option>
+						</select>
+					</div>
+					
+					<div class="form-row two-col">
+						<select id="address_ward" name="address_ward" class="input">
+							<option value="">Chọn Phường / Xã</option>
+							<option value="P1">Phường 1</option>
+							<option value="P2">Phường 2</option>
+							<option value="P3">Phường 3</option>
+						</select>
+						<select id="address_city" name="address_city" class="input">
+							<option value="">Chọn Tỉnh / Thành phố</option>
+							<option value="HCM">TP. Hồ Chí Minh</option>
+							<option value="HN">Hà Nội</option>
+							<option value="DN">Đà Nẵng</option>
+						</select>
+					</div>
+				</div>
+				
+
+				<div class="divider"><div class="divider-line"></div></div>
+
+				<div class="form-row">
+					<button class="btn" type="submit">
+						Lưu và Đăng nhập
+						<svg class="arrow" viewBox="0 0 8 8"><path d="M1 4h5M4 1l3 3-3 3"
+							stroke="rgba(255,255,255,0.95)" stroke-width="1.25"
+							fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+					</button>
+				</div>
+			</form>
+
+			<div class="card-footer">
+				Bạn đã có tài khoản? <a href="login.html">Đăng nhập</a>
+			</div>
+		</main>
+	</div>
+</body>
+</html>

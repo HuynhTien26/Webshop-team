@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch Sử Mua Hàng</title>
+    
+    <link rel="stylesheet" href="../../assets/icon/fontawesome-free-7.1.0-web/css/all.min.css"> 
+    <link rel="stylesheet" href="../../assets/css/user.css">
+    <link rel="stylesheet" href="../../assets/css/history.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="header-left">
+                <div class="logo">
+                    <a href="../../index.html" aria-label="Trang chủ Pocky Doll">
+                        <img
+                            src="../../assets/img/logo.svg" 
+                            alt="Pocky Doll Logo" 
+                            width="120" 
+                            height="auto"
+                        />
+                    </a>
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <a href="../../index.html" class="icon-with-label" aria-label="Trang chủ">
+                    <div class="icon-wrap"><i class="fa-solid fa-house"></i></div>
+                    <div class="icon-label">Trang chủ</div>
+                </a>
+                
+                <a href="cart.html" class="icon-with-label" aria-label="Giỏ hàng">
+                    <div class="icon-wrap"><i class="fa-solid fa-cart-shopping"></i></div>
+                    <div class="icon-label">Giỏ hàng</div>
+                </a>
+                
+                <a href="history.html" class="icon-with-label history-item" title="Xem Lịch Sử Mua Hàng">
+                    <div class="icon-wrap"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                    <span class="icon-label">Lịch Sử</span> 
+                </a>
+
+                <a href="profile.html" class="icon-with-label" aria-label="Tài khoản">
+                    <div class="icon-wrap"><i class="fa-solid fa-user"></i></div>
+                    <div class="icon-label">Tài khoản</div>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1><i class="fa-solid fa-clock-rotate-left"></i> Lịch Sử Mua Hàng</h1>
+
+        <div id="order-history-container" class="order-history-list">
+        </div>
+
+        <div id="no-history-message">
+            <p>Bạn chưa có đơn hàng nào được ghi nhận.</p>
+            <a href="../../index.html" style="color: var(--primary);">Tiếp tục mua sắm</a>
+        </div>
+    </div>
+
+    <script>
+        // Định dạng tiền tệ VND
+        const formatter = new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+            minimumFractionDigits: 0
+        });
+
+        // HÀM TẢI DỮ LIỆU TỪ LOCAL STORAGE (Được giữ nguyên)
+        function loadOrderHistory() {
+            const historyString = localStorage.getItem('orderHistory');
+            try {
+                return historyString ? JSON.parse(historyString) : [];
+            } catch (e) {
+                console.error("Lỗi khi đọc lịch sử đơn hàng:", e);
+                return [];
+            }
+        }
+
+        // HÀM XỬ LÝ TRẠNG THÁI (Được giữ nguyên)
+        function getStatusClass(status) {
+            switch (status) {
+                case 'completed': return 'status-completed';
+                case 'pending': return 'status-pending';
+                case 'cancelled': return 'status-cancelled';
+                default: return '';
+            }
+        }
+        function getStatusText(status) {
+            switch (status) {
+                case 'completed': return 'Đã Giao Thành Công';
+                case 'pending': return 'Đang Xử Lý';
+                case 'cancelled': return 'Đã Hủy';
+                default: return 'Không rõ';
+            }
+        }
+
+        // ⭐️⭐️ HÀM RENDER (ĐÃ KHÔI PHỤC VÀ CẬP NHẬT HIỂN THỊ TÊN/SĐT) ⭐️⭐️
+        function renderOrderHistory(orders) {
+            const container = document.getElementById('order-history-container');
+            const noMessage = document.getElementById('no-history-message');
+
+            if (!orders || orders.length === 0) {
+                container.innerHTML = '';
+                noMessage.style.display = 'block';
+                return;
+            }
+
+            noMessage.style.display = 'none';
+            orders.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            const historyHTML = orders.map(order => {
+                // Tạo HTML cho danh sách sản phẩm
+                const productListHTML = order.products.map(p => `
+                    <li class="product-item">
+                        <span>${p.name} (x${p.quantity})</span>
+                        <small>${formatter.format(p.price * p.quantity)}</small>
+                    </li>
+                `).join('');
+
+                // 💥 LOGIC HIỂN THỊ TÊN/SĐT (ĐÃ KHÔI PHỤC) 💥
+                const deliveryDetailsHTML = `
+                    <div style="font-size: 0.9em; margin-bottom: 10px; line-height: 1.6;">
+                        <p style="margin: 0;">
+                            Người nhận: 
+                            <span style="font-weight: bold; color: var(--primary);">
+                                ${order.receiverName || '---'}
+                            </span>
+                        </p>
+                        <p style="margin: 0; color: var(--muted);">
+                            SĐT: 
+                            <span style="font-style: italic;">
+                                ${order.receiverPhone || '---'}
+                            </span>
+                        </p>
+                        <p style="margin: 0;">
+                            Địa chỉ: 
+                            ${order.deliveryAddress || order.address || '---'}
+                        </p>
+                    </div>
+                `;
+                
+                return `
+                    <div class="order-card">
+                        <div class="order-header">
+                            <div>
+                                <span class="order-id">Mã ĐH: ${order.id}</span>
+                                &nbsp;|&nbsp;
+                                <small>Ngày đặt: ${order.date}</small>
+                            </div>
+                            <span class="order-status ${getStatusClass(order.status)}">
+                                ${getStatusText(order.status)}
+                            </span>
+                        </div>
+                        
+                        ${deliveryDetailsHTML} 
+                        
+                        <ul class="product-list">
+                            ${productListHTML}
+                        </ul>
+
+                        <div class="order-total">
+                            Tổng tiền: <span style="color: var(--primary);">${formatter.format(order.total)}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = historyHTML;
+        }
+
+        // Khởi tạo khi trang tải xong
+        document.addEventListener('DOMContentLoaded', () => {
+            const userHistory = loadOrderHistory(); 
+            renderOrderHistory(userHistory);
+        });
+    </script>
+</body>
+</html>

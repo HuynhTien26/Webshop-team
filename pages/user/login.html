@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Đăng nhập | Pocky Doll</title>
+
+  <link rel="preconnect" href="https://c04.nhahodau.net/" crossorigin />
+  <link rel="stylesheet" href="../../assets/fonts/inter.css" />
+  <link rel="stylesheet" href="../../assets/icon/fontawesome-free-7.1.0-web/css/all.min.css" />
+  <link rel="stylesheet" href="../../assets/css/auth.css" />
+  <script src="../../assets/js/auth.js" defer></script>
+</head>
+<body>
+  <div class="page">
+    <main class="card" role="main" aria-labelledby="title">
+
+      <a href="../../index.html" class="back-arrow-btn" aria-label="Quay về trang chủ"><i class="fa-solid fa-arrow-left"></i></a>
+
+      <div class="logo">
+        <a href="../../index.html"><img src="../../assets/img/logo.svg" alt="Pocky Doll" /></a>
+      </div>
+
+      <h1 id="title">Đăng nhập</h1>
+      <div class="subtitle">Mừng bạn trở lại!</div>
+
+      <form id="loginForm" novalidate>
+        <div class="divider"><div class="divider-line"></div></div>
+
+        <div class="form-row">
+          <label for="username">Tên đăng nhập</label>
+          <input id="username" name="username" class="input" type="text"
+                 placeholder="Tài khoản" required pattern="^[A-Za-z0-9._-]{3,30}$"
+                 title="3-30 kí tự. Được phép dùng chữ cái, số, '.', '_' và '-'." autocomplete="username" />
+        </div>
+
+        <div class="form-row">
+          <label for="password">Mật khẩu</label>
+          <div class="password-wrap">
+            <input id="password" name="password" class="input" type="password"
+                   placeholder="Mật khẩu" required minlength="6"
+                   autocomplete="current-password" title="Tối thiểu 6 kí tự." />
+            <button type="button" class="password-toggle" aria-label="Hiện mật khẩu">
+              <i class="eye-icon fa-solid fa-eye" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <button class="btn" type="submit">
+            Đăng nhập
+            <svg class="arrow" viewBox="0 0 8 8"><path d="M1 4h5M4 1l3 3-3 3"
+              stroke="rgba(255,255,255,0.95)" stroke-width="1.25"
+              fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </form>
+
+      <div class="card-footer">
+        Bạn chưa có tài khoản? <a href="signup.html">Đăng kí</a>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

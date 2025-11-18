@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Thông tin cá nhân | Pocky Doll</title>
+
+		<link rel="preconnect" href="https://c04.nhahodau.net/" crossorigin />
+		<link rel="stylesheet" href="../../assets/fonts/inter.css" />
+		<link rel="stylesheet" href="../../assets/icon/fontawesome-free-7.1.0-web/css/all.min.css" />
+        <link rel="stylesheet" href="../../assets/css/auth.css" />
+        <script src="../../assets/js/profile.js" defer></script>
+
+    </head>
+    <body>
+        <div class="page">
+            <main class="card" role="main" aria-labelledby="title">
+
+                <a href="../../index.html" class="back-arrow-btn" aria-label="Quay về trang chủ"><i class="fa-solid fa-arrow-left"></i></a>
+
+                <div class="logo">
+                    <a href="../../index.html"><img src="../../assets/img/logo.svg" alt="Pocky Doll" /></a>
+                </div>
+                <h1>Thông tin cá nhân</h1>
+
+                <form id="profileForm">
+					<div class="form-row two-col">
+						<div>
+							<label for="fullName">Họ và Tên*</label>
+							<input id="fullName" name="fullName" class="input" type="text"
+										 placeholder="Nguyễn Văn A" required autocomplete="name" />
+						</div>
+						<div>
+							<label for="username">Tên đăng nhập*</label>
+							<input id="username" name="username" class="input" type="text"
+										 placeholder="Tài khoản" required autocomplete="username" />
+						</div>
+					</div>
+
+					<div class="form-row">
+						<label for="contact">Phương thức liên lạc*</label>
+						<input id="contact" name="contact" class="input" type="text"
+									 placeholder="Email hoặc SĐT (vd: 090xxxxxxx)" required autocomplete="tel" />
+					</div>
+
+					<div class="form-row">
+						<label for="address_street">Địa chỉ*</label> <div class="form-row two-col" style="margin-bottom: 8px;">
+							<input id="address_street" name="address_street" class="input" type="text"
+										 placeholder="Số nhà, tên đường" required autocomplete="street-address" />
+							<select id="address_district" name="address_district" class="input">
+								<option value="">Chọn Quận / Huyện</option>
+								<option value="Q1">Quận 1</option>
+								<option value="Q3">Quận 3</option>
+								<option value="TB">Quận Tân Bình</option>
+							</select>
+						</div>
+						
+						<div class="form-row two-col">
+							<select id="address_ward" name="address_ward" class="input">
+								<option value="">Chọn Phường / Xã</option>
+								<option value="P1">Phường 1</option>
+								<option value="P2">Phường 2</option>
+								<option value="P3">Phường 3</option>
+							</select>
+							<select id="address_city" name="address_city" class="input">
+								<option value="">Chọn Tỉnh / Thành phố</option>
+								<option value="HCM">TP. Hồ Chí Minh</option>
+								<option value="HN">Hà Nội</option>
+								<option value="DN">Đà Nẵng</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="divider"><div class="divider-line"></div></div>
+					<p class="subtitle" style="font-size: 0.9rem; margin-bottom: 12px;">Để trống nếu không muốn đổi mật khẩu</p>
+
+                    <div class="form-row">
+                        <label for="currentPassword">Mật khẩu hiện tại</label>
+                        <input type="password" id="currentPassword" class="input" autocomplete="current-password" />
+                    </div>
+
+                    <div class="form-row two-col">
+						<div>
+							<label for="newPassword">Mật khẩu mới</label>
+							<input type="password" id="newPassword" class="input" autocomplete="new-password" />
+						</div>
+						<div>
+							<label for="confirmPassword">Xác nhận mật khẩu mới</label>
+							<input type="password" id="confirmPassword" class="input" autocomplete="new-password" />
+						</div>
+                    </div>
+
+					<div class="divider"><div class="divider-line"></div></div>
+
+                    <div class="form-row">
+                        <button type="submit" class="btn">Lưu thay đổi</button>
+                    </div>
+
+                    <div class="form-row">
+                        <button type="button" class="btn" id="logoutBtn">Đăng xuất</button>
+                    </div>
+
+                    <div class="form-row" style="margin-top:18px;">
+                        <div id="deleteAccountText" style="color:#c62828; text-decoration:underline; font-weight:700; cursor:pointer;">
+                            Xóa tài khoản
+                        </div>
+                        <div id="deleteConfirmArea" style="display:none; margin-top:12px;">
+                            <p style="color:#b71c1c; font-weight:600;">Bạn sắp xóa tài khoản. Vui lòng gõ tên đăng nhập <strong id="currentUsernameLabel"></strong> để xác nhận.</p>
+                            <input id="deleteConfirmInput" class="input" placeholder="Gõ lại tên đăng nhập" />
+                            <div style="display:flex; gap:8px; margin-top:8px;">
+                                <button id="confirmDeleteBtn" class="btn" style="background:#b71c1c; border:0; color:#fff;">⚠️ Xóa tài khoản</button>
+                                <button id="cancelDeleteBtn" type="button" class="btn">Hủy bỏ</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </main>
+        </div>
+    </body>
+</html>
